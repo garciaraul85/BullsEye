@@ -15,14 +15,14 @@ struct ContentView: View {
     // property that when changed, will refresh the ui
     @State var alertIsVisible: Bool = false
     @State var sliderValue: Double = 50.0
-    
+    @State var target = Int.random(in: 1...100)// random int from 1 to 100
     var body: some View {
         VStack {
             Spacer()
             // Target row
             HStack {
                 Text("Put the bulls eye as close as possible:")
-                Text("100")
+                Text("\(self.target)")
             }
             Spacer()
             
@@ -48,7 +48,8 @@ struct ContentView: View {
                     Alert in
                     let roundedValue = Int(self.sliderValue.rounded()) // cast to int
                     return Alert(title:   Text("Hello there!"),
-                                 message: Text("The slider value is \(roundedValue)"),
+                                 message: Text("The slider value is \(roundedValue) \n" +
+                                                "You scored points \(self.pointsForCurrentRound()) this round "),
                                  dismissButton: .default(Text("Awesome")))
                 }
             }
@@ -78,6 +79,21 @@ struct ContentView: View {
                 .padding(.bottom, 20)
             }
         }
+    }
+    
+    func pointsForCurrentRound() ->Int {
+        var difference: Int
+        let roundedValue: Int = Int(self.sliderValue.rounded())
+        if (roundedValue > self.target) {
+            difference = roundedValue - self.target
+        } else if (self.target > roundedValue) {
+            difference = self.target - roundedValue
+        } else {
+            difference = 0
+        }
+        
+        let awardedPoints = 100 - difference
+        return awardedPoints
     }
 }
 
