@@ -7,6 +7,9 @@
 // String interpolation example : "The slider value is \(self.sliderValue)"
 // var -> mutable
 // let -> inmutable
+// global scope -> visible everywhere
+// instance scope -> visible in class
+// local scope -> visible only in func
 //
 
 import SwiftUI
@@ -46,9 +49,8 @@ struct ContentView: View {
                 // state variables use $
                 .alert(isPresented: $alertIsVisible) { () ->
                     Alert in
-                    let roundedValue = Int(self.sliderValue.rounded()) // cast to int
                     return Alert(title:   Text("Hello there!"),
-                                 message: Text("The slider value is \(roundedValue) \n" +
+                                 message: Text("The slider value is \(sliderValueRounded()) \n" +
                                                 "You scored points \(self.pointsForCurrentRound()) this round "),
                                  dismissButton: .default(Text("Awesome")))
                 }
@@ -81,11 +83,12 @@ struct ContentView: View {
         }
     }
     
-    func pointsForCurrentRound() ->Int {
-        let roundedValue: Int = Int(self.sliderValue.rounded())
-        let difference = abs(self.target - roundedValue) // get absolute value (turn negative to positive)
-        let awardedPoints = 100 - difference
-        return awardedPoints
+    func sliderValueRounded() -> Int {
+        Int(self.sliderValue.rounded())// same as return Int(self.sliderValue.rounded()) if you have 1 line only
+    }
+    
+    func pointsForCurrentRound() -> Int {
+        return  100 - abs(self.target - sliderValueRounded())
     }
 }
 
