@@ -19,6 +19,7 @@ struct ContentView: View {
     @State var alertIsVisible: Bool = false
     @State var sliderValue: Double = 50.0
     @State var target = Int.random(in: 1...100)// random int from 1 to 100
+    @State var score = 0
     var body: some View {
         VStack {
             Spacer()
@@ -43,6 +44,7 @@ struct ContentView: View {
                     // print function
                     print("Button pressed!")
                     self.alertIsVisible = true
+                    self.score += self.pointsForCurrentRound()
                 }) {
                     Text("Hit me!")
                 }
@@ -67,7 +69,7 @@ struct ContentView: View {
                 Spacer()
                 // score columns
                 Text("Score")
-                Text("999999")
+                Text("\(score)")
                 Spacer()
                 Text("Round")
                 Text("999")
@@ -88,7 +90,7 @@ struct ContentView: View {
     }
     
     func pointsForCurrentRound() -> Int {
-        return  100 - abs(self.target - sliderValueRounded())
+        return 100 - abs(self.target - sliderValueRounded())
     }
 }
 
