@@ -3,6 +3,10 @@
 //  BullsEye
 //
 //  Created by Saulo Garcia on 8/31/20.
+// Bindings: ui is tied to state of a variable
+// String interpolation example : "The slider value is \(self.sliderValue)"
+// var -> mutable
+// let -> inmutable
 //
 
 import SwiftUI
@@ -10,33 +14,69 @@ import SwiftUI
 struct ContentView: View {
     // property that when changed, will refresh the ui
     @State var alertIsVisible: Bool = false
+    @State var sliderValue: Double = 50.0
     
-    // some object behaves like a view but its not a view
     var body: some View {
-        VStack { // Arrange objects vertically
-            // Text object
-            Text("Hola mundo")
-                .font(.title)
-                .fontWeight(.semibold)
-                .foregroundColor(Color.blue)
-                .padding()
-            // Button object1
-            Button(action: {
-                // print function
-                print("Button pressed!")
-                self.alertIsVisible = true
-            }) {
-                Text("Hit me!")
+        VStack {
+            Spacer()
+            // Target row
+            HStack {
+                Text("Put the bulls eye as close as possible:")
+                Text("100")
             }
+            Spacer()
             
-            // state variables use $
-            .alert(isPresented: $alertIsVisible) { () ->
-                Alert in
-                return Alert(title:   Text("Hello there!"),
-                             message: Text("This is my first pop-up"),
-                             dismissButton: .default(Text("Awesome")))
+            // Slider row
+            HStack {
+                Text("1")
+                Slider(value: self.$sliderValue, in: 1...100)
+                Text("100")
             }
+            Spacer()
             
+            // Button row
+            HStack {
+                Button(action: {
+                    // print function
+                    print("Button pressed!")
+                    self.alertIsVisible = true
+                }) {
+                    Text("Hit me!")
+                }
+                // state variables use $
+                .alert(isPresented: $alertIsVisible) { () ->
+                    Alert in
+                    let roundedValue = Int(self.sliderValue.rounded()) // cast to int
+                    return Alert(title:   Text("Hello there!"),
+                                 message: Text("The slider value is \(roundedValue)"),
+                                 dismissButton: .default(Text("Awesome")))
+                }
+            }
+            Spacer()
+            
+            // Score row
+            HStack {
+                // Button column
+                Button(action: {
+                }) {
+                    Text("Start over")
+                }
+                Spacer()
+                // score columns
+                Text("Score")
+                Text("999999")
+                Spacer()
+                Text("Round")
+                Text("999")
+                Spacer()
+                // Button column
+                Button(action: {
+                }) {
+                    Text("Info")
+                }
+                // bottom padding 20 points
+                .padding(.bottom, 20)
+            }
         }
     }
 }
