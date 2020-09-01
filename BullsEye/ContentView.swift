@@ -75,7 +75,6 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            
             Spacer()
             // Target row
             HStack {
@@ -139,9 +138,9 @@ struct ContentView: View {
                 Text("Round").modifier(LabelStyle())
                 Text("\(currentRound)").modifier(ValueStyle())
                 Spacer()
+                
                 // Button column
-                Button(action: {
-                }) {
+                NavigationLink(destination: AboutView()) {
                     HStack {
                         Image("InfoIcon").accentColor(midnightBlue)
                         Text("Info").modifier(ButtonSmallTextStyle())
@@ -153,7 +152,8 @@ struct ContentView: View {
             }
         }
         .background(Image("Background"), alignment: .center)
-        .accentColor(Color.white)
+        .accentColor(Color.white) // Doesnt work
+        .navigationBarTitle("Bullseye") // doesnt work
     }
     
     func amountOff() -> Int {
