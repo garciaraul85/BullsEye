@@ -18,6 +18,7 @@ struct ContentView: View {
     // property that when changed, will refresh the ui
     @State var alertIsVisible: Bool = false
     @State var sliderValue: Double = 50.0
+    @State var currentRound = 1
     @State var target = Int.random(in: 1...100)// random int from 1 to 100
     @State var score = 0
     var body: some View {
@@ -44,7 +45,6 @@ struct ContentView: View {
                     // print function
                     print("Button pressed!")
                     self.alertIsVisible = true
-                    self.score += self.pointsForCurrentRound()
                 }) {
                     Text("Hit me!")
                 }
@@ -54,7 +54,11 @@ struct ContentView: View {
                     return Alert(title:   Text("Hello there!"),
                                  message: Text("The slider value is \(sliderValueRounded()) \n" +
                                                 "You scored points \(self.pointsForCurrentRound()) this round "),
-                                 dismissButton: .default(Text("Awesome")))
+                                 dismissButton: .default(Text("Awesome")) {
+                                    self.score += self.pointsForCurrentRound()
+                                    self.target = Int.random(in: 1...100)
+                                    self.currentRound += 1
+                                 })
                 }
             }
             Spacer()
@@ -72,7 +76,7 @@ struct ContentView: View {
                 Text("\(score)")
                 Spacer()
                 Text("Round")
-                Text("999")
+                Text("\(currentRound)")
                 Spacer()
                 // Button column
                 Button(action: {
