@@ -26,11 +26,14 @@ struct ContentView: View {
     @State var score = 0
     
     // Custom view?: ViewModifier receives view, modifies it and returns it back
-    /*struct LabelStyle: ViewModifier {
-        var body(content: Content) -> some View {
-        
+    struct LabelStyle: ViewModifier {
+        func body(content: Content) -> some View {
+            return content
+                .font(Font.custom("Arial Rounded MT Bold", size: 18))
+                .foregroundColor(Color.white)
+                .shadow(color: Color.white, radius: 5, x: 2, y: 2)
         }
-    }*/
+    }
     
     
     var body: some View {
@@ -39,25 +42,16 @@ struct ContentView: View {
             Spacer()
             // Target row
             HStack {
-                Text("Put the bulls eye as close as possible:")
-                    .font(Font.custom("Arial Rounded MT Bold", size: 18))
-                    .foregroundColor(Color.white)
-                    .shadow(color: Color.white, radius: 5, x: 2, y: 2)
+                Text("Put the bulls eye as close as possible:").modifier(LabelStyle())
                 Text("\(self.target)")
             }
             Spacer()
             
             // Slider row
             HStack {
-                Text("1")
-                    .font(Font.custom("Arial Rounded MT Bold", size: 18))
-                    .foregroundColor(Color.white)
-                    .shadow(color: Color.white, radius: 5, x: 2, y: 2)
+                Text("1").modifier(LabelStyle())
                 Slider(value: self.$sliderValue, in: 1...100)
-                Text("100")
-                    .font(Font.custom("Arial Rounded MT Bold", size: 18))
-                    .foregroundColor(Color.white)
-                    .shadow(color: Color.white, radius: 5, x: 2, y: 2)
+                Text("100").modifier(LabelStyle())
             }
             Spacer()
             
@@ -95,10 +89,10 @@ struct ContentView: View {
                 }
                 Spacer()
                 // score columns
-                Text("Score")
+                Text("Score").modifier(LabelStyle())
                 Text("\(score)")
                 Spacer()
-                Text("Round")
+                Text("Round").modifier(LabelStyle())
                 Text("\(currentRound)")
                 Spacer()
                 // Button column
