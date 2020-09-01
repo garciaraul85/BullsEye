@@ -10,6 +10,9 @@
 // global scope -> visible everywhere
 // instance scope -> visible in class
 // local scope -> visible only in func
+// 1x old devices 9 or older
+// 2x retina screens
+// 3x super HD retina, plus, ten, ten s
 //
 
 import SwiftUI
@@ -21,12 +24,25 @@ struct ContentView: View {
     @State var currentRound = 1
     @State var target = Int.random(in: 1...100)// random int from 1 to 100
     @State var score = 0
+    
+    // Custom view?: ViewModifier receives view, modifies it and returns it back
+    /*struct LabelStyle: ViewModifier {
+        var body(content: Content) -> some View {
+        
+        }
+    }*/
+    
+    
     var body: some View {
         VStack {
+            
             Spacer()
             // Target row
             HStack {
                 Text("Put the bulls eye as close as possible:")
+                    .font(Font.custom("Arial Rounded MT Bold", size: 18))
+                    .foregroundColor(Color.white)
+                    .shadow(color: Color.white, radius: 5, x: 2, y: 2)
                 Text("\(self.target)")
             }
             Spacer()
@@ -34,8 +50,14 @@ struct ContentView: View {
             // Slider row
             HStack {
                 Text("1")
+                    .font(Font.custom("Arial Rounded MT Bold", size: 18))
+                    .foregroundColor(Color.white)
+                    .shadow(color: Color.white, radius: 5, x: 2, y: 2)
                 Slider(value: self.$sliderValue, in: 1...100)
                 Text("100")
+                    .font(Font.custom("Arial Rounded MT Bold", size: 18))
+                    .foregroundColor(Color.white)
+                    .shadow(color: Color.white, radius: 5, x: 2, y: 2)
             }
             Spacer()
             
@@ -88,6 +110,7 @@ struct ContentView: View {
                 .padding(.bottom, 20)
             }
         }
+        .background(Image("Background"), alignment: .center)
     }
     
     func amountOff() -> Int {
