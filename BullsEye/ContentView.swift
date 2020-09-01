@@ -125,7 +125,7 @@ struct ContentView: View {
                     HStack {
                         Image("StartOverIcon")
                                  .renderingMode(.template)
-                                 .foregroundColor(.white)
+                                 .foregroundColor(midnightBlue)
                         Text("Start over").modifier(ButtonSmallTextStyle())
                     }
                 }.background(Image("Button")).modifier(ShadowStyle())
@@ -142,7 +142,9 @@ struct ContentView: View {
                 // Button column
                 NavigationLink(destination: AboutView()) {
                     HStack {
-                        Image("InfoIcon").accentColor(midnightBlue)
+                        Image("InfoIcon")
+                            .renderingMode(.template)
+                            .foregroundColor(midnightBlue)
                         Text("Info").modifier(ButtonSmallTextStyle())
                     }
                 }.background(Image("Button")).modifier(ShadowStyle())
@@ -152,8 +154,7 @@ struct ContentView: View {
             }
         }
         .background(Image("Background"), alignment: .center)
-        .accentColor(Color.white) // Doesnt work
-        .navigationBarTitle("Bullseye") // doesnt work
+        .navigationBarTitle("Bullseye")
     }
     
     func amountOff() -> Int {
